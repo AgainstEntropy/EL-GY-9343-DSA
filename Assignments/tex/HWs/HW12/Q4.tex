@@ -1,0 +1,14 @@
+\noindent \textred{4.} 
+The goal of this problem is to travel from home to a store, purchase a gift, and then get back home, at minimal cost. \\
+Let us model this problem using a directed graph. Let $G(V, E)$ be a directed, weighted graph, with non-negative edge weights $w: E \rightarrow \mathbb{R}^{+}$. The weight of an edge represents the cost of traversing that edge. Each vertex $v \in V$ also has an associated cost $c(v) \in \mathbb{R}^{+}$ which represents the cost of purchasing the desired gift at that location. \\
+Starting from ``home base" $h \in V$, the goal is to find a location $v \in V$ where the gift can be purchased, along with a path $p$ from $h$ to $v$ and back from $v$ to $h$. The cost of such a solution is the cost $c(v)$ of the location $v$ plus the weight $w(p)$ of the path $p$ (i.e., the sum of edge weights along the path $p$). \\
+Design an algorithm that on input $G(V, E)$, including edge weights $w(\cdot)$ and costs $c(\cdot)$, and home base $h \in V$ , finds a minimal cost solution. Assuming $G$ is represented using adjacency lists, and Dijkstra's algorithm runs in $O(|E| \log |V |)$. Your algorithm should run Dijkstra \textbf{exactly once} and in time $O((|V |+ |E|) \log |V|)$. Please show why your algorithm works and analyze the time complexity. \\
+\textbf{Hints}: If you try to solve with the original graph $G$, then most likely you will have to run multiple times of Dijkstra. You can try to extend the graph $G$ into two layers. What is the number of nodes and edges?
+\myAnswer{
+\begin{enumerate}
+    \item Split all vertices into two pieces, one named $v_i^{in}$, which are connected with all in-edges, and another named $v_i^{out}$, which are connected with all out-edges.
+    \item For all $i$, connect $v_i^{in}$ to $v_i^{out}$ with a one-way edge with weight of $c(v_i)$. Then assign $\infty$ to the edge $(h^{in}, h^{out})$.
+    \item Run Dijkstra's algorithm on the newly constructed graph $G'$ once. Then we can get the minimum cost from $h^{in}$ to $h^{out}$.
+\end{enumerate}
+The newly constructed graph $G'$ has no more than $2|V|$ nodes and no more than $|E|+|V|$ edges. Therefore, the running time on $G'$ is $O((|E|+|V|) \log (2|V|)) = O((|V |+ |E|) \log |V|)$.
+}

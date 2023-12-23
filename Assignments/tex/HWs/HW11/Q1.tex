@@ -1,0 +1,28 @@
+% refer to https://brainly.com/question/34227289
+\noindent \textred{1.} 
+Design a greedy algorithm for arranging the queuing order in a supermarket. Suppose there are $n$ customers come to the counter at the same time, noted as $c_1, c_2, \dots, c_n$, the time to service $i$-th customer is $s_i , i = 1, 2, \dots, n$, and the absolute time to finish $i$-th customer is $T_i , i = 1, 2, \dots, n$. Your goal is to decide a queuing order of $n$ customers to minimize the accumulated completion time (waiting time + service time) of all $n$ customers, that is, to minimize $\sum_{i=1}^n T_i$.
+
+\begin{itemize}
+    \item[(a)] Provide an algorithm to solve this issue; \\
+    \myAnswer{
+        Sort $n$ customers according to service time $s_i$, and re-index $c_i$ in ascending order. \\
+        Now $c_i$ is the optimal queuing order that minimize $\sum_{i=1}^n T_i$.
+    }
+    \item[(b)] Prove the correctness of your algorithm by showing the greedy choice property and optimal substructure; \\
+    \myAnswer{
+    Assume the customers' indices have been updated and they now indicate the actually serving order. The completion time of the $k$-th customer, $T_k$, can be calculated as
+    \[
+        T_k = s_1 + s_2 + \dots + s_k = \sum_{i=1}^k s_i
+    \]
+    For the first $k$ customers, the total accumulated serving time is 
+    \begin{equation} \label{eq:t}
+        \sum_{i=1}^k T_i = k \cdot s_1 + (k-1) \cdot s_2 + \dots + 1 \cdot s_k = \sum_{i=1}^k (k+1-i) \cdot s_i
+    \end{equation}
+    \textbf{greedy choice property: } The algorithm selects the customer with the shortest service time first, ensuring that the time being accumulated the most times in the waiting time is the shortest service time, as shown in \eqref{eq:t}. This choice is made at each step, resulting in a locally optimal solution.\\
+    \textbf{optimal substructure: } By serving the customer with the shortest service time first, the algorithm creates a subproblem with only the first $k$ customers. The queuing order for the remaining customers can be determined using the same greedy algorithm. This means that the optimal solution for the entire problem can be built from the optimal solutions of its subproblems.
+    }
+    \item[(c)] Justify the running time of your algorithm. \\
+    \myAnswer{
+    The sorting contributes to all of the running time, which is $O(n \log n)$.
+    }
+\end{itemize}

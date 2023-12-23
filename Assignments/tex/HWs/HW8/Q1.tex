@@ -1,0 +1,8 @@
+\noindent \textred{1.} 
+What is the running time of DFS if the graph ($G = (V, E)$, where there are $|V|$ nodes and $|E|$ edges) is given as an adjacency list and adjacency matrix? Justify your running time. 
+\myAnswer{
+\begin{itemize}
+    \item If using adjacency list, it takes $\Theta(degree(u))$ to list all adjacent vertices for each vertex $u$ when visiting $u$. Moreover, the sum of length of all adjacent lists is $\Theta(|E|)$. Therefore, the total running time is \underline{$\Theta(|V|+|E|)$}.
+    \item If using adjacency matrix, it takes $\Theta(|V|)$ to list all adjacent vertices for each vertex $u$ when visiting $u$. Therefore, in total it takes \underline{$O(|V|^2)$}. \\
+\end{itemize}
+}

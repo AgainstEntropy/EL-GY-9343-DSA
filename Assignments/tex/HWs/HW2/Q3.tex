@@ -1,0 +1,18 @@
+\noindent \textred{3.} Solve the recurrence:
+$$ T(n) = 2T(\sqrt{n}) + (\log  \log  n)^2 $$
+(Hint: How to make change of variables so that you can apply Master’s method?)
+\newline \\
+\textblue{
+If we set $m = \log  n$, so $n = 2^m$, we have
+$$ T(2^m) = 2 T(\sqrt{2^m}) + \log  m = 2 T(2^{\frac{m}{2}}) + (\log  m)^2 $$
+Then we let $S(m) = T(2^m)$, we have
+$$ S(m) = 2 S(\frac{m}{2}) + (\log  m)^2 $$
+which is in the form of
+$$ S(m) = a S(\frac{m}{b}) + f(m), $$
+where $a = 2$, $b = 2$ and $f(m) = (\log m)^2$. Since we know that
+$$ \log m = O(\sqrt{m}), $$
+we can also show that 
+$$ f(m) = (\log m)^2 = O(m) = m^{\log _b a}$$
+Therefore, we can readily apply Master's method and get the solution:
+$$ S(m) = \Theta(m) \implies \underline{T(n) = \Theta(\log n)} $$
+}

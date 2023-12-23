@@ -1,0 +1,32 @@
+\noindent \textred{4.} 
+Given two matrices $A : p \times q, B : q\times r, C = AB$ is a $p \times r$ matrix, and time to compute C is $p \times q \times r$ (calculating by $C_{ij} = \sum_{k=1}^p A_{ik} B_{kj}$). \\
+Given three matrices $A : p \times q, B : q \times r, C : r \times s$, though $(AB)C = A(BC)$, the time required to compute in the two cases could vary greatly. (E.g., when $p = r = 1$, $q = s$, one is $2q$ and the other is $2 q^2$.) \\
+Now, given $n$ matrices $A_i, i = \{1, 2, . . . , n\}$, and $A_i$ has size $p_i \times p_{i+1}$. Find the minimum cost way to compute the multiplication $A_1 A_2 \dots A_n$. (Dynamic programming) \\
+\myAnswer{
+The algorithm is shown in Algo.\ref{alg:matrix}, which runs in time complexity of $O(n^3)$.
+}
+\begin{algorithm}[!ht]
+\caption{MatMul} \label{alg:matrix}
+\begin{algorithmic}[1]
+    \Require Matrix shapes \{$p_i \times p_{i+1}$\} for $i = \{1, 2, . . . , n\}$
+    \Ensure Minimum cost to compute the multiplication $A_1 A_2 \dots A_n$
+    \State let $c[1\dots n]$ and $s[1\dots n]$ be new arrays
+    \State $c[1] \leftarrow 0$, $s[1] \leftarrow 1$
+    \For {$j = 2 \dots n$}
+        \State $q = +\infty$
+        \For {$i = 1 \dots j-1$} \Comment{$O(j^2)$}
+            \State $c_1 \leftarrow p_{i+1} \sum_{k=i+2}^j (p_k p_{k+1})$
+            \Comment{$c_1$ is the cost to compute $A_{i+1} \dots A_j$} \Comment{$O(j-i)$}
+            \State $c_2 \leftarrow p_1 p_{i+1} p_{j+1}$
+            \Comment{$c_2$ is the cost to compute $(A_1\dots A_i) (A_{i+1} \dots A_j)$}
+            \If{$q > c[i] + c_1 + c_2$}
+                \State $q \leftarrow c[i] + c_1 + c_2$
+                \State $s[j] \leftarrow i$
+            \EndIf
+        \EndFor
+        \State $c[j] \leftarrow q$
+        \Comment{$c[j]$ is the minimum cost to compute $A_1 \dots A_j$}
+    \EndFor
+    \State \Return $c[n]$
+\end{algorithmic}
+\end{algorithm}

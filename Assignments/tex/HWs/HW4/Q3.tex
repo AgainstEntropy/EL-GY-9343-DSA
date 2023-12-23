@@ -1,0 +1,52 @@
+\noindent \textred{3.} For an disordered array with $n$ elements, design an algorithm for finding the median of this array. Your algorithm should traverse the array only once. \\
+\textbf{Notes}: You can imagine the array as a flow which means you can get the data one by one, and you need to do some \textit{cheap} operation at the time you see each element. The size of this array, $n$, is big and you know $n$ from the start. Please do not sort the array, or you cannot get full mark. A hint to solve this problem is to use heap. \\
+\textblue{
+The median is basically the minimum one of the largest $\lfloor \frac{n}{2} \rfloor$ elements. So I propose Algo.\ref{alg:heap-median}, whose key idea is to maintain one MaxHeap and one MinHeap at the same time.
+}
+
+% \begin{algorithm}[!h]
+% \caption{\textbf{Find Median Using Heap}$(A)$} \label{alg:heap-median-1}
+% \begin{algorithmic}[1]
+% \Require $A$ as input array to find the median, containing $n$ real numbers
+% \Ensure The median of $A$
+% \State $B \leftarrow \{\}$
+% \For{$i = 1, 2, \dots, n$}
+%     \State $\mathrm{MaxHeapInsert}(B, A[i])$
+% \EndFor
+% \For{$j = 1, 2, \dots, \lfloor \frac{n}{2} \rfloor$}
+%     \State $m \leftarrow \mathrm{HeapExtractMax}(B)$
+% \EndFor
+% \If{$n~\mathrm{mod}~2 == 0$}
+%     \State \Return $(m + \mathrm{HeapExtractMax}(B))/2$
+% \Else
+%     \State \Return $\mathrm{HeapExtractMax}(B)$
+% \EndIf
+% \end{algorithmic}
+% \end{algorithm}
+
+\begin{algorithm}[!ht]
+\caption{\textbf{Find Median Using Heap}$(A)$ 
+% \textred{!!Please note this algorithm is not yet complete!!}
+} 
+\label{alg:heap-median}
+\begin{algorithmic}[1]
+\Require $A$ as input array to find the median, containing $n$ real numbers
+\Ensure The median of $A$
+\State $B: \mathrm{MaxHeap} \leftarrow \{\}, C: \mathrm{MinHeap} \leftarrow \{\}$
+\For{$i = 1, 2, \dots, n$}
+    \State $\mathrm{MaxHeapInsert}(B, A[i])$
+    \If{$i > \lfloor \frac{n}{2} \rfloor$}
+        \State $m \leftarrow \mathrm{HeapExtractMax}(B)$ 
+        \textblue{\Comment{$B$ keeps a size of $\lfloor \frac{n}{2} \rfloor$, thus efficient}}
+        \State $\mathrm{MinHeapInsert}(C, m)$
+    \EndIf
+\EndFor
+\State $m^{'} \leftarrow \mathrm{HeapExtractMin}(C)$
+\If{$n~\mathrm{mod}~2 == 0$}
+    \State $m \leftarrow \mathrm{HeapExtractMax}(B)$
+    \State \Return $(m^{'} + m)/2$
+\Else
+    \State \Return $m^{'}$
+\EndIf
+\end{algorithmic}
+\end{algorithm}

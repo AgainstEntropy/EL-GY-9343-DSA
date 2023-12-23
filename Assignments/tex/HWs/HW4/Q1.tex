@@ -1,0 +1,17 @@
+\noindent \textred{1.} Demonstrate the operation of HOARE-PARTITION on the array $A = \{14, 12, 14, 19, 5, 3, 4, 14, 7, 22, 16 \} $. Show the array after each iteration of the while loop in the lines of 4 to 11 in the code of lecture notes. \\
+\textblue{
+We choose the first element \textred{14} as the pivot, and we use two \underline{underlines} to denote the position of two pointers just before the \textit{swap} operation. Then we have
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c}
+        After $i$ iterations & Array $A$ \\
+        \hline
+        0 & $\{\underline{\textred{14}}, 12, 14, 19, 5, 3, 4, 14, \underline{7}, 22, 16 \}$ \\
+        1 & $\{7, 12, \underline{14}, 19, 5, 3, 4, \underline{14}, \textred{14}, 22, 16 \}$ \\
+        2 & $\{7, 12, 14, \underline{19}, 5, 3, \underline{4}, 14, \textred{14}, 22, 16 \}$ \\
+        3 & $\{7, 12, 14, 4, 5, 3, \underline{\underline{19}}, 14, \textred{14}, 22, 16 \}$ \\
+    \end{tabular}
+    % \caption{Caption}
+    % \label{tab:my_label}
+\end{table}
+}

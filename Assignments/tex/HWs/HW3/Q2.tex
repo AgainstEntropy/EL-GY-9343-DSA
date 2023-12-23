@@ -1,0 +1,31 @@
+\noindent \textred{2.} 
+Consider sorting $n$ numbers stored in array $A$, indexed from 1 to $n$. First find the smallest element of $A$ and exchanging it with the element in $A[1]$. Then find the second smallest element of $A$, and exchange it with $A[2]$. Continue in this manner for the first $n - 1$ elements of $A$. 
+\begin{enumerate}
+    \item[(a)] Write pseudo-code for this algorithm, which is known as selection sort. 
+\vspace{-7pt}
+\begin{algorithm}[h]
+\caption{\textbf{Selection Sort}$(A)$} \label{alg:selection-sort}
+\begin{algorithmic}[1]
+\Require $A$ as input list to be sorted, containing $n$ real numbers
+\Ensure A sorted version of $A$
+\For{$i = 1, 2, \dots, n-1$}
+    \State $min\_idx \leftarrow i$
+    \For{$j = i+1, i+2, \dots, n$}
+        \If{$A[j] < A[min\_idx]$}
+            \State $min\_idx \leftarrow j$
+        \EndIf
+    \EndFor
+    \State $\mathrm{SWAP}(A[i], A[min\_idx])$
+\EndFor
+\State \Return $A$
+\end{algorithmic}
+\end{algorithm}
+    \item[(b)] What loop invariant does this algorithm maintain? \\
+    \textblue{At the start of each iteration, the sub-array $A[1, \dots, i-1]$ is sorted.
+    }
+    \item[(c)] Give the best-case and worst-case running times of selection sort in $\Theta$-notation. \\
+    \textblue{
+    \textbf{Best case}: $\Theta(n^2)$. \\
+    \textbf{Worst case}: $\Theta(n^2)$. \\
+    }
+\end{enumerate}

@@ -1,0 +1,78 @@
+% this file contains some packedges & definisions
+
+% basic ones
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{hyperref}
+
+% \usepackage[dvipsnames]{xcolor}
+\usepackage{color}
+% \definecolor{myGreen}{HTML}{559D64}
+% \definecolor{myBlue}{HTML}{3D69B9}
+\definecolor{myRed}{HTML}{e74c3c}
+\definecolor{myGreen}{HTML}{27ae60}
+\definecolor{myBlue}{HTML}{3498db}
+\definecolor{myOrange}{HTML}{e67e22}
+\definecolor{myPurple}{HTML}{9b59b6}
+\newcommand{\textred}[1]{\textcolor{myRed}{#1}}
+\newcommand{\textgreen}[1]{\textcolor{myGreen}{#1}}
+\newcommand{\textblue}[1]{\textcolor{myBlue}{#1}}
+\newcommand{\mycarry}[1]{\textcolor{myBlue}{\scriptstyle #1}}
+\newcommand{\myborrow}[1]{\textcolor{myGreen}{{}_{#1}}}
+\newcommand{\ToBeRevised}[1]{\textcolor{myPurple}{#1}}
+\newcommand{\myAnswer}[1]{\textcolor{myBlue}{#1}}
+
+\newcommand{\combination}[2]{\genfrac ( ) {0pt}{0}{#1}{#2}}
+
+% table
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{multirow}
+
+% pseudo code
+% \usepackage[ruled, noline, nofillcomment, linesnumbered]{algorithm2e}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% code
+\usepackage{minted}
+% \usemintedstyle{colorful}
+\usemintedstyle{friendly}
+
+% subfigure
+\usepackage{caption}
+\usepackage{subcaption}
+
+% tree
+\usepackage{qtree}
+
+% general drawing
+\usepackage{tikz}
+\tikzset{
+  heap/.style={
+    every node/.style={circle, draw},
+    level 1/.style={sibling distance=40mm},
+    level 2/.style={sibling distance=20mm},
+    level 3/.style={sibling distance=10mm},
+  }
+}
+
+% other fun things
+
+% annotate-equations
+% https://github.com/synercys/annotated_latex_equations
+% https://github.com/st--/annotate-equations
+\usepackage{annotate-equations}
+
+% short division visualization
+% form https://tex.stackexchange.com/questions/210648/division-with-remainders-displayed-on-side
+% other styles: https://tex.stackexchange.com/questions/254633/how-to-type-short-division
+\usepackage{stackengine}
+\def\rlwd{.5pt} \def\rlht{2.2ex} \def\rldp{.5ex}
+\def\mydiv#1{~%
+  \rule[-\rldp]{\rlwd}{\rlht}%
+  \setbox0=\hbox{~#1}%
+  \stackunder[\dimexpr\rldp-\rlwd]{~#1}{\rule{\wd0}{\rlwd}}%
+}

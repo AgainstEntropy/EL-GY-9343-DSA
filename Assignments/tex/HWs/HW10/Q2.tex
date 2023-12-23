@@ -1,0 +1,14 @@
+% For graph case (not tree case), refer to https://ac.informatik.uni-freiburg.de/teaching/ss_12/netalg/lectures/chapter6.pdf
+% and https://www.geeksforgeeks.org/maximal-independent-set-in-an-undirected-graph/
+\noindent \textred{2.} 
+(\textbf{Maximum Independent Set in Trees}\footnote{Finding maximum-sized independent sets in general graphs is NP-complete. So we will focus on tree cases.}) In an undirected graph $G = (V,E)$, an \textit{independent set} $S$ is a subset of the vertex set $V$ that contains no edge inside it, i.e. $S$ is an \textit{independent set} on $G \Leftrightarrow S \subseteq V, \forall u, v \in S \rightarrow \{u, v\} \notin E$.\\
+Given a rooted tree $T(V,E)$ with root node $r$, find an independent set of the maximum size. Briefly describe why your algorithm is correct. 
+\myAnswer{
+\begin{enumerate}
+    \item Run BFS/DFS on the tree $T(V,E)$ from the root node $r$, during which mark the distance from the root node.
+    \item Gather all vertices (or nodes) into two groups, depending on whether the distance from root node is odd or even.
+    \item Check the number of vertices in each group, which yields $|V_{odd}|$ and $|V_{even}|$
+    \item Return $\max(|V_{odd}|, |V_{even}|)$ \\
+\end{enumerate} 
+Since the given graph is a tree, all nodes are naturally divided into ``layers" according to the distance from root node. And all edges only exist between adjacent layers. There are no direct connection between layers that are not adjacent. Therefore, layers with odd distance and layers with even distance are two possible largest independent set, among which we can tell which one is truly maximum by computing the sizes.
+}

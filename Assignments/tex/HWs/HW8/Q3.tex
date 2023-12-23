@@ -1,0 +1,28 @@
+\noindent \textred{3.}
+\textbf{Bipartiteness}. Given a undirected graph $G = (V, E)$, it is \textit{bipartite} if there exist $U$ and $W$ such that $U \cup W = V$ , $U \cap W = \varnothing$, and every edge has one endpoint each in $U$ and $W$.
+\begin{itemize}
+    \item[(a)] Prove: $G$ is bipartite only if $G$ has no odd cycle. (Hint: proof by contradiction) \\
+    \myAnswer{
+    Let's say we have a bipartite graph $G = (V, E)$ such that $U \cup W = V$ , $U \cap W = \varnothing$, and there is an odd cycle which contain $2K+1$ vertices, where $K \geq 1$. Since every edge has one endpoint each in $U$ and $W$, each $u_i$ must be connected with 2 $w_j$, and vice versa. Let $u_1, u_2, \dots, u_I$ be vertices in the odd cycle that are in $U$ and $w_1, w_2, \dots, w_J$ be vertices in $W$, where $I + J = 2K+1$. W.l.o.g, let $I \leq K, J \geq K+1$, and let $w_i$ be connected to $u_i$ and $u_i$ be connected to $w_{i+1}$ for $i = 1, 2, \dots, I$. Therefore, $\{w_j\}$ for all $j \geq I+1$ are connected with each other, meaning there are endpoints of some edges fall in the same part. Here we have the contradiction, indicating the initial assumption is wrong.
+    }
+    \item[(b)] In fact, $G$ is bipartite if and only if $G$ has no odd cycle. Suppose this is given, consider the Algorithm \ref{alg:test-bipart} and briefly describe why it is correct. \\
+    \myAnswer{
+    To have a odd cycle in the graph, there must be an edge between two layers $L_i$ and $L_j$, where $|i - j|$ is an even number (including 0). However, BFS ensures that there is no edge between layers that are not adjacent. Therefore, we only need to check if there are edges inside any layer to determine if the graph is bipartite.
+    }
+    \item[(c)] Analyze the time complexity (worst-case, big-$O$) of the algorithm, in terms of $|V|$ and $|E|$. (Hint: can we check that there is no edge inside any layer in $O(|E|)$? Why?) \\
+    \myAnswer{
+    It costs $O(|V| + |E|)$ to do BFS. We can achieve $O(|E|)$ when checking there is no edge inside any layer by traversing all edges and see if two endpoints are in different layers. Thus, in total the time complexity is $O(|V| + |E|)$. \\
+    }
+\end{itemize}
+\begin{algorithm}[t]
+\caption{Testing bipartiteness of graphs} \label{alg:test-bipart}
+\begin{algorithmic}[1]
+\State Do BFS starting at any node $u$
+\State Let $L_0, L_1, L_2, \dots, L_k$ be layers in the resulting breadth-first tree ($L_0 = \{u\}, L_i, i = 1, 2, \dots, k$ contains the vertices at distance $i$ from $u$)
+\If {There is no edge inside any layer $L_i$}
+    \State Declare $G$ to be bipartite, and $U = L_0 \cup L_2 \cup L_4 \cup \dots, W = L_1 \cup L_3 \cup L_5 \cup \dots$ are the bipartition
+\Else 
+    \State Declare G to be non-bipartite
+\EndIf
+\end{algorithmic}
+\end{algorithm}

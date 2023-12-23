@@ -1,0 +1,84 @@
+\noindent \textred{2.} 
+\textbf{Quicksort with equal element values.} The analysis of the expected running time of the randomized quicksort assumes that all element values are distinct. In this problem, we examine what happens when they are not.
+\begin{itemize}
+    \item[(a)] Suppose that all element values are equal. What would be randomized quicksort’s running time in this case? \\
+    \textblue{
+    It's \underline{$O(n^2)$} because every partitions will be extremely unbalanced.
+    }
+    \item[(b)] The PARTITION procedure returns an index $q$ such that each element of $A[p, \dots, q -1]$ is less than or equal to$ A[q]$ and each element of $A[q + 1, \dots, r]$ is greater than $A[q]$. Modify the PARTITION procedure to produce a procedure PARTITION’$(A, p, r)$, which permutes the elements of $A[p, \dots, r]$ and returns two indices $q$ and $t$, where $p \leq q \leq t \leq r$, such that
+    \begin{itemize}
+        \item[i.] all elements of $A[q, \dots, t]$ are equal, 
+        \item[ii.] each element of $A[p, \dots, q - 1]$ is less than $A[q]$, and 
+        \item[iii.] each element of $A[t + 1, \dots, r]$ is greater than $A[q]$.
+    \end{itemize}
+    Like PARTITION, your PARTITION’ procedure should take $\Theta(r - p)$ time.\\
+\begin{algorithm}[!h]
+\caption{\textbf{PARTITION'}$(A, p, r)$} \label{alg:partition'}
+\begin{algorithmic}[1]
+\Require $A$ as input array to be partitioned within the index range of $[p, r]$
+\Ensure Two indices $q$ and $t$, where $p \leq q \leq t \leq r$
+\State $x \leftarrow A[p]$
+\State $i \leftarrow p+1$
+\For {$j = p+1, p+2, \dots, r$} 
+\Comment{move all elements equals to $x$ to the front of the array}
+    \If {A[p] == x}
+        \State EXCHANGE $A[i] \leftrightarrow A[j]$ 
+        \State $i \leftarrow i+1$
+    \EndIf
+\EndFor
+\State $c \leftarrow i-p$ \Comment{$c$ is the number of elements equals to $x$}
+\State $i \leftarrow i-1$
+\State $j \leftarrow r+1$
+\While {True}
+\Comment{do a normal PARTITION, but with strictly less and greater}
+    \Repeat
+        \State $j \leftarrow j-1$
+    \Until $A[j] < x$ 
+    \Repeat
+        \State $i \leftarrow i+1$
+    \Until $A[i] > x$ 
+    \If {$i < j$}
+        \State EXCHANGE $A[i] \leftrightarrow A[j]$ 
+    \Else 
+        \State $\textred{t} \leftarrow i-1$
+    \EndIf
+\EndWhile
+\State $i \leftarrow p$
+\For{$i=0,1, \dots, c$}  \Comment{exchange the elements equal to $x$ from the front to the middle}
+    \State EXCHANGE $A[p+i] \leftrightarrow A[j]$ 
+    \State $j \leftarrow j-1$
+\EndFor
+\State $\textred{q} \leftarrow j+1$
+\State \Return $\textred{q}$, $\textred{t}$
+\end{algorithmic}
+\end{algorithm}
+
+    \item[(c)] Modify the RANDOMIZED-PARTITION procedure to call PARTITION’, and name the new procedure RANDOMIZED-PARTITION’. Then modify the QUICKSORT procedure to produce a procedure QUICKSORT’$(A, p, r)$ that calls RANDOMIZED-PARTITION’ and recurses only on partitions of elements not known to be equal to each other. 
+\begin{algorithm}[h]
+\caption{\textbf{RANDOMIZED-PARTITION'}$(A, p, r)$} \label{alg:rand-partition'}
+\begin{algorithmic}[1]
+\Require $A$ as input array to be partitioned within the index range of $[p, r]$
+\Ensure Two indices $q$ and $t$, where $p \leq q \leq t \leq r$
+\State $i \leftarrow RANDOM(p, r)$
+\State EXCHANGE $A[i] \leftrightarrow A[p]$ 
+\State \Return PARTITION'$(A, p, r)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\caption{\textbf{QUICKSORT’}$(A, p, r)$} \label{alg:quick-sort'}
+\begin{algorithmic}[1]
+\Require $A$ as input array to be partitioned within the index range of $[p, r]$
+\Ensure The sorted version of $A$
+\If {$p<r$}
+    \State $q, t \leftarrow \text{RANDOMIZED-PARTITION'}(A, p, r)$
+    \State \text{RANDOMIZED-PARTITION'}$(A, p, q)$
+    \State \text{RANDOMIZED-PARTITION'}$(A, t, r)$
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+    \item[(d)] Using QUICKSORT’, how would you adjust the analysis of randomized quicksort to avoid the assumption that all elements are distinct? \\
+    \textblue{
+    Now we exclude the elements that equal to the pivot from the recurrence, so we will not recursively compare all those equal numbers, thus the total number of comparison will not increase due to duplication. The total time complexity is still $O(n\log n)$ using QUICKSORT’.
+    }
+\end{itemize}

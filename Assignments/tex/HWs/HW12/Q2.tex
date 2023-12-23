@@ -1,0 +1,72 @@
+\noindent \textred{2.} 
+Run the Floyd-Warshall algorithm on the following graph. Show the matrix $D^{(k)}$ that results for each iteration of the outer loop.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{HWs//HW12//figures/2.png}
+\end{figure}
+
+\noindent
+\myAnswer{
+$D^{(0)} = \begin{pmatrix}
+0 & \infty & \infty & \infty & -1 & \infty \\
+1 & 0 & \infty & 2 & \infty & \infty \\
+\infty & 2 & 0 & \infty & \infty & -8 \\
+-4 & \infty & \infty & 0 & 3 & \infty \\
+\infty & 7 & \infty & \infty & 0 & \infty \\
+\infty & 5 & 10 & \infty & \infty & 0 \\
+\end{pmatrix}$ 
+\qquad
+$D^{(1)} = \begin{pmatrix}
+0 & \infty & \infty & \infty & -1 & \infty \\
+1 & 0 & \infty & 2 & 0 & \infty \\
+3 & 2 & 0 & 4 & 2 & -8 \\
+-4 & \infty & \infty & 0 & -5 & \infty \\
+8 & 7 & \infty & 9 & 0 & \infty \\
+6 & 5 & 10 & 7 & 5 & 0 \\
+\end{pmatrix}$
+\\ \\ \\
+$D^{(2)} = \begin{pmatrix}
+0 & \infty & \infty & \infty & -1 & \infty \\
+1 & 0 & \infty & 2 & 0 & \infty \\
+3 & 2 & 0 & 4 & 2 & -8 \\
+-4 & \infty & \infty & 0 & -5 & \infty \\
+8 & 7 & \infty & 9 & 0 & \infty \\
+6 & 5 & 10 & 7 & 5 & 0 \\
+\end{pmatrix}$ 
+\qquad
+$D^{(3)} = \begin{pmatrix}
+0 & \infty & \infty & \infty & -1 & \infty \\
+1 & 0 & \infty & 2 & 0 & \infty \\
+3 & 2 & 0 & 4 & 2 & -8 \\
+-4 & \infty & \infty & 0 & -5 & \infty \\
+8 & 7 & \infty & 9 & 0 & \infty \\
+6 & 5 & 10 & 7 & 5 & 0 \\
+\end{pmatrix}$
+\\ \\ \\
+$D^{(4)} = \begin{pmatrix}
+0 & \infty & \infty & \infty & -1 & \infty \\
+-2 & 0 & \infty & 2 & -3 & \infty \\
+0 & 2 & 0 & 4 & -1 & -8 \\
+-4 & \infty & \infty & 0 & -5 & \infty \\
+5 & 7 & \infty & 9 & 0 & \infty \\
+3 & 5 & 10 & 7 & 2 & 0 \\
+\end{pmatrix}$
+\qquad
+$D^{(5)} = \begin{pmatrix}
+0 & 6 & \infty & 8 & -1 & \infty \\
+-2 & 0 & \infty & 2 & -3 & \infty \\
+0 & 2 & 0 & 4 & -1 & -8 \\
+-4 & 2 & \infty & 0 & -5 & \infty \\
+5 & 7 & \infty & 9 & 0 & \infty \\
+3 & 5 & 10 & 7 & 2 & 0 \\
+\end{pmatrix}$
+\\ \\ \\
+$D^{(6)} = \begin{pmatrix}
+0 & 6 & \infty & 8 & -1 & \infty \\
+-2 & 0 & \infty & 2 & -3 & \infty \\
+-5 & -3 & 0 & -1 & -6 & -8 \\
+-4 & 2 & \infty & 0 & -5 & \infty \\
+5 & 7 & \infty & 9 & 0 & \infty \\
+3 & 5 & 10 & 7 & 2 & 0 \\
+\end{pmatrix}$
+}

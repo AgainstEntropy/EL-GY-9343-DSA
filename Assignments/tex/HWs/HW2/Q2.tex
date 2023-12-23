@@ -1,0 +1,15 @@
+\noindent \textred{2.} Use the substitution method to prove that,
+$$ T(n) = 2T(\frac{n}{2}) + c n \log n $$
+is $O(n(\log  n)^2)$, where $c > 0$ is a constant. ($\log \equiv \log 2$, in this and the following questions)
+\newline \\
+\textblue{
+Assume $T(k) \leq c_1 \cdot k(\log  k)^2, ~\forall k < n$, we have
+\[
+\begin{aligned}
+    T(n) &= 2T(\frac{n}{2}) + c n~\log  n \\
+    &\leq 2c_1 \cdot \frac{n}{2} (\log \frac{n}{2})^2  + c \cdot n~\log  n \\
+    &= c_1 \cdot n (\log  n - 1)^2 + c \cdot n~\log  n \\
+    &= c_1 \cdot n (\log  n)^2 + (c - 2c_1) \cdot n~\log  n + c_1 \cdot n = \underline{O(n(\log  n)^2)}
+\end{aligned}
+\]
+}

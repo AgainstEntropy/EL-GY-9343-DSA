@@ -1,0 +1,23 @@
+\noindent \textred{1.} 
+A string is a palindrome if it is the same read left to right or right to left, e.g. ababa. The longest palindrome subsequence of a string $x$ is its longest subsequence (of not necessarily consecutive symbols) that is a palindrome. We want an algorithm to determine in time O($|x|^2$) the length of the longest palindrome sub-sequence of a string $x$.
+\begin{itemize}
+    \item[(a)] A cheap solution is, let $y$ be the reverse of $x$, and apply the standard Longest Common Subsequence (LCS) algorithm to $x$ and $y$. This approach is numerically correct, but flawed, since the character locations for a LCS in $x$ and $y$ does not have to reference the same sequence of physical characters. Suppose $x$ is ZABZA, what are the LCS for $x$ and its reverse? How many are they? Are they all palindrome? \\
+    \myAnswer{
+    The LCS for $x$(ZABZA) and its reverse(AZBAZ) are AZA, ABA, ZBA, ABZ, ZBZ, ZAZ. There are 6 LCS in total, among which ZBA, ABZ are not palindrome.
+    }
+    \\
+    \item[(b)] A better way is to design a new DP algorithm. Let $l(i, j)$ be the length of longest palindrome in $x[i, \dots, j]$, please write the recurrence equations, including the initial conditions. Please analyze the time and space complexity. \\
+    \myAnswer{
+    To specify, if the given string is of length $n$, then  $i, j$ are integers within $[1, n]$.
+    \begin{equation*}
+        l[i, j] = 
+        \begin{cases}
+            0 & \text{if}~ i>j \\
+            1 & \text{if}~ i=j \\
+            l[i+1, j-1] + 2 & \text{if}~ i<j \\
+        \end{cases} 
+    \end{equation*}
+    The space complexity is $O(n^2)$ because we need a 2-D matrix of shape $n\times n$ to store $l[i,j]$. 
+    The time complexity is $O(n^2)$ because it takes $O(1)$ to fill in each entry of the matrix.
+    }
+\end{itemize}

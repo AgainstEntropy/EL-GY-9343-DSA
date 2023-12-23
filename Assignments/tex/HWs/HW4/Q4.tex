@@ -1,0 +1,70 @@
+\noindent \textred{4.} Finding the median of an unordered array in $O(n)$ (Part II). In last homework, we looked at an algorithm that tried to find the median in $O(n)$, but it is not correct. This time we are going to fix it. \\
+Let’s consider a more general problem: given an unsorted array $L$ of $n$ elements ($L[1, . . . , n]$), how to
+find the $k^{th}$ smallest element in it (and when $k = \lceil \frac{n}{2} \rceil $, this turns out to find the median). We can also
+do divide-and-conquer to solve it, by the algorithm called QUICKSELECT, as follows.
+
+\begin{algorithmic}
+\State \textbf{QUICKSELECT}($L, p, r, k$)
+\State $q \leftarrow \textbf{PARTITION}(L, p, r)$
+\State $t \leftarrow q - p + 1$
+\If{k == t}
+    \State \Return $L[q]$
+\ElsIf{$k < t$}
+    \State \textbf{QUICKSELECT}($L, p, q - 1, k$) \{Only look at the left part\}
+\Else
+    \State \textbf{QUICKSELECT}($L, q + 1, r, k - t$) \{Only look at the right part\}
+\EndIf
+\end{algorithmic}
+
+\begin{enumerate}
+    \item[(a)] The pivot selection in PARTITION plays a key role in optimizing the performance of teh QUICKSORT algorithm. If we use HOARE-PARTITION as the PARTITION function, please \textbf{solve} for the worst-case running time. And, what is the average running time (just give the answer)? \\
+    \textblue{
+    The worst-case occurs when the array is already in order, which results in a maximally unbalanced partition for every single partition. Therefore, the recursion formula is
+    \[
+        T(n) = \Theta(1) + T(n-1) + \Theta(n) = T(n-1) + \Theta(n)
+    \]
+    We can find the $k^{th}$ smallest element after $k$ levels of recursion. Therefore, $C(n, k)$, the total running time of finding the $k^{th}$ smallest element in an array of $n$, is
+    \[
+    \begin{aligned}
+        C(n, k) &\simeq n + (n-1) + (n-2) + \cdots + (n-k) \\
+        &= \sum_{i=1}^n i - \sum_{j=1}^{n-k-1} j = \frac{n(n+1)}{2} - \frac{(n-k-1)(n-k)}{2} \\
+        % &= \frac{(2n-k)(k+1)}{2} \\
+        &= \underline{-\frac{1}{2} k^2 + (n - \frac{1}{2}) k + n}
+    \end{aligned}
+    \]
+    The average running time can be calculated by taking expectation of $C(n, k)$ on $k$:
+    \[
+    \begin{aligned}
+        \mathbb{E}_k [C(n, k)] &= \mathbb{E}_k [-\frac{1}{2} k^2 + (n - \frac{1}{2}) k + n] \\
+        &= -\frac{1}{2} \mathbb{E} [k^2] + (n - \frac{1}{2}) \mathbb{E} [k] + n \\
+        &= -\frac{1}{2} \frac{(n+1)(2n+1)}{6} + (n - \frac{1}{2}) \frac{n}{2} + n \sim \underline{\Theta(n^2)}
+    \end{aligned}
+    \]
+    }
+    \item[(b)] The $b^*$ found in the algorithm in last homework may not be the true median, yet it could serve as a good pivot. Let’s look at the BFPRT algorithm (a.k.a. median-of-medians), which uses this pivot to do the partition, as follows.
+    \begin{algorithmic}
+        \State \textbf{BFPRT}($L, p, r$)
+        \State Divide $L[p, . . . , r]$ into $\frac{r-p+1}{5}$ lists of size 5 each
+        \State Sort each list, let $i^{th}$ list be $a_i \leq a_i' \leq b_i \leq c_i \leq c_i', i = 1, 2, \dots, \frac{r-p+1}{5}$ \textblue{\Comment{$\Theta(\frac{n}{5})$}}
+        \State Recursively find median of $b_1, b_2, . . . , b_{\frac{r-p+1}{5}}$, call it $b^*$ \textblue{\Comment{$T(\frac{n}{5})$}}
+        \State Use $b^*$ as the pivot and reorder the list (do swapping like in HOARE-PARTITION after pivot selection) \textblue{\Comment{$\Theta(n)$}}
+        \State Suppose after reordering, $b^*$ is at $L[q]$, \Return q
+\end{algorithmic}
+Solve for the worst-time running time of the QUICKSELECT algorithm, if we utilize BFPRT as PARTITION. \\
+(\textbf{Hints}: In QUICKSORT, the worst-time running time occurs when every partition is extremely unbalanced, so does in QUICKSELECT. Therefore, we need to consider how unbalanced this partition could be. Remember that there is a median finding step in BFPRT algorithm. And in this question we only require the solution in big-$O$ notation.) \\
+\textblue{
+According to the selection of pivot $b^{*}$ in the BFPRT algorithm, we know that $b^{*} \geq \{ b_1, b_2, \dots, b_{\frac{r-p+1}{10}} \}$ which are $\frac{1}{10} n$ numbers. Moreover, $b_i \geq {a_i, a_i^{'}}$ for all $i=1, 2, \dots, \frac{r-p+1}{10}$, which are $2 * \frac{r-p+1}{10} = \frac{2}{10} n$ numbers. Therefore, $b^{*}$ is greater or equals to at least $\frac{3}{10} n$ numbers, which means there are still $\frac{7}{10} n$ numbers left. Now we have the recursion equation in the worst case:
+}
+\vspace{\baselineskip}
+\begin{equation*}
+    T(n) = \eqnmarkbox[myBlue]{r}{T(\frac{1}{5} n)} + \eqnmarkbox[myRed]{p}{T(\frac{7}{10} n)} + \eqnmarkbox[myGreen]{l}{O(n)}
+\vspace{1.5\baselineskip}
+\end{equation*}
+\annotate[yshift=-10pt]{below, left}{r}{\textbf{Recursively finding median}}
+\annotate[yshift=10pt, xshift=0pt]{above, right}{p}{\textbf{Worst-case partition}}
+\annotate[yshift=-10pt]{below, right}{l}{\textbf{Sorting and reordering list}}
+
+\textblue{
+\noindent By solving this recursion, we can tell that \underline{$T(n) \sim O(n)$} in the worst case because the sum of all coefficient is $\frac{1}{5} + \frac{7}{10} = \frac{9}{10} < 1$.
+}
+\end{enumerate}

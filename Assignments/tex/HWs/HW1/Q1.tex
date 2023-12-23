@@ -1,0 +1,20 @@
+\noindent \textbf{1. Prove the following properties of asymptotic notation:}
+
+\noindent (a) $n = \omega(\sqrt{n})$ \\
+\textblue{For any given constant $c>0$, there always exists a $n_0 = c^2$ such that for any $n \ge n_0$, we have $n > c \cdot \sqrt{n}$. Thus $n = \omega(\sqrt{n})$.} $\blacksquare$
+\newline
+
+\noindent (b) If $f(n) = \Omega(g(n))$, and $h(n) = \Theta(g(n))$, then $f(n) = \Omega(h(n))$ 
+% $f(n) = \Omega(g(n))$ indicates that there exist constants
+% $c_0 > 0$ and $n_1 \ge 0$ such that $f(n) \ge c_0 \cdot g(n)$ for all $n \ge n_1$. \\
+% And $h(n) = \Theta(g(n))$ indicated that there exist constants
+% $c_1, c_2 > 0$ and $n_2 \ge 0$ such that $c_1 \cdot g(n) \le h(n) \le c_2 \cdot g(n)$ for all $n \ge n_2$. \\
+% Therefore, there exist constant $n_3 = \mathrm{max}(n_1, n_2)$
+
+\noindent \textblue{With the definition of $\Theta$ notation, we have $h(n) = \Theta(g(n)) \Longrightarrow g(n) = \Theta(h(n)) \Longrightarrow g(n) = \Omega(h(n))$ and $g(n) = O(h(n))$. \\
+Using the transitivity of $\Omega$ notation, we have $f(n) = \Omega(g(n))$ and $g(n) = \Omega(h(n)) \Longrightarrow f(n) = \Omega(h(n)).$} $\blacksquare$
+\newline
+
+\noindent (c) $f(n) = O(g(n))$ if and only if $g(n) = \Omega(f(n))$ (Transpose Symmetry property) \\
+\textblue{If $g(n) = \Omega(f(n))$, there exist constants
+$c > 0$ and $n_0 \ge 0$ such that $g(n) \ge c_0 \cdot f(n)$ for all $n \ge n_0$, which also indicates that $\forall n \ge n_0, f(n) \le 1/c_0 \cdot g(n) = c_1 \cdot g(n)$, where $c_1 = 1/c_0 > 0$. Thus we have $f(n) = O(g(n))$.} $\blacksquare$

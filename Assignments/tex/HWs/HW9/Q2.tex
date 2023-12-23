@@ -1,0 +1,53 @@
+\noindent \textred{2.} 
+You are given a system of m inequalities involving n variables, $x_1, \dots, x_n$. Each inequality is of the form
+$$x_j \ge x_i + c_{ij}$$
+, for some pair of indices $i, j \in {1, \dots, n}$ and some non-negative constant $c_{ij} \ge 0$.\\
+The system is given as a weighted, directed graph $G$. The graph G has vertices, numbered $1, \dots , n$, and $m$ edges. Each inequality as above is represented in $G$ as an edge from vertex $i$ to vertex $j$ with weight
+$c_{ij}$. Moreover, $G$ is represented in adjacency list format.
+\begin{itemize}
+    \item[(a)] First assume that $G$ is acyclic. Your task is to design an algorithm that takes $G$ as input, and computes an assignment to the variables that satisfies the system of inequalities represented by $G$. More precisely, such a satisfying assignment is a list of non-negative numbers $(a_1, \dots, a_n)$ that satisfy $a_j \ge a_i + c_{ij}$ for each inequality $x_j \ge x_i + c_{ij}$ in the system of inequalities. Your algorithm should run in time $O(m + n)$. \\
+    \myAnswer{
+    The algorithm is shown in Algo.\ref{alg:assign-acyclic}, which runs in time complexity of $O(m + n)$.
+    }
+    \begin{algorithm}[!h]
+    \caption{AssignAcyclic} \label{alg:assign-acyclic}
+    \begin{algorithmic}[1]
+        \Require Graph $G$, $G$'s vertices $\{v_1, \dots, v_n\}$ and $G$'s edge weights $\{c_{ij}\}$,
+        \Ensure An assignment $\{a_1, \dots, a_n\}$ that satisfies inequalities
+        \State Run TOPOLOGICAL-SORT on $G$, which yields a sorted version of vertices $\{v_{k_1}, v_{k_2}, \dots, v_{k_n}\}$, such that $a_{k_p} \le a_{k_{p+1}}$ for any $1 \le p \le n-1$ after assignment
+        \For {$i$ in $1, \dots, n$} \Comment{$O(n)$}
+            \State $a(v_i) \leftarrow 0$
+            \Comment{$a(v_i)$ is an alias of $a_i$ for clarity}
+        \EndFor
+        \For {$i$ in $1, \dots, n$} \Comment{$O(n)$}
+            \For {$u_j$ in Adj($v_{k_i}$)} \Comment{$O(m)$}
+                \State $a(u_j) \leftarrow \max(a(u_j), a(v_{k_i}) + c_{k_i, j})$
+                \Comment{ensure that $a_j \ge a_{k_i} + c_{k_i,j}$}
+            \EndFor
+        \EndFor
+    \end{algorithmic}
+    \end{algorithm}
+    \item[(b)] Now consider the previous problem, but $G$ is a general directed graph (not necessarily acyclic). Design an algorithm that determines if the system of inequalities has a satisfying assignment, and if so, outputs a satisfying assignment. Your algorithm should run in time $O(m + n)$. \\
+    Hint: Think carefully about the precise conditions under which the system of inequalities has a satisfying assignment. You may use any standard algorithm as a subroutine. You may also use an algorithm that solves the first part of the problem as a subroutine to solve the second part. \\
+    \myAnswer{
+    The algorithm is shown in Algo.\ref{alg:assign-general}, which runs in time complexity of $O(m + n)$.
+    }
+    \begin{algorithm}[!ht]
+    \caption{AssignGeneral} \label{alg:assign-general}
+    \begin{algorithmic}[1]
+        \Require Graph $G$, $G$'s vertices $\{v_1, \dots, v_n\}$ and $G$'s edge weights $\{c_{ij}\}$,
+        \Ensure An valid assignment $\{a_1, \dots, a_n\}$, or False if inequalities can not be satisfied
+        \State Run STRONGLY-CONNECTED-COMPONENTS on $G$, which yields a component DAG
+        \Comment{$O(m+n)$}
+        \For {$C$ in component DAG} \Comment{$O(n)$}
+            \If {some edge weights within $C$ is not 0} \Comment{$O(m)$}
+                \State \Return False
+            \EndIf
+        \EndFor
+        \State Run AssignAcyclic on the component DAG \Comment{$O(m+n)$}
+        \For {$C$ in component DAG} \Comment{$O(n)$}
+            \State Assign same values for all vertices within $C$
+        \EndFor
+    \end{algorithmic}
+    \end{algorithm}
+\end{itemize}

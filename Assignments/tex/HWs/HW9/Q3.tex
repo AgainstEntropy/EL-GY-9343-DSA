@@ -1,0 +1,28 @@
+\noindent \textred{3.} 
+Your city has $n$ junctions numbered 1 through $n$. There are $m$ one-way roads between the junctions. As a mayor of the city, you have to ensure the security of all the junctions. To ensure the security, you have to build some police checkpoints. Each checkpoint can only be built at a junction. A checkpoint at junction $i$ can protect junction $j$ if either $i = j$ or the police patrol car can drive from $i$ to $j$ and then drive back to $i$. Building checkpoints costs some money. As some areas of the city are more expensive than others, building checkpoints at some junctions might cost more money than other junctions. You
+have to determine the minimum budget $B$ needed to ensure the security of all the junctions.\\
+Design an algorithm to solve this problem. The input consists of
+\begin{itemize}
+    \item[(a)] a list of costs $c_1, \dots, c_n$, where $c_i$ is the cost of building a checkpoint at junction $i$, and
+    \item[(b)] for every junction $i$, a list of all pairs $(i, j)$ that represent a one-way road from junction $i$ to junction $j$.
+\end{itemize}
+The output is (the minimum budget) $B$. 
+You may use any standard algorithms as subroutines. Be sure to state the running time of your algorithm, and to justify your running time bound. Your algorithm should run in time $O(n + m)$. \\
+\myAnswer{
+The algorithm is shown in Algo.\ref{alg:budget}, which runs in time complexity of $O(m + n)$.
+}
+\vspace{-10pt}
+\begin{algorithm}[!ht]
+\caption{MinBudget} \label{alg:budget}
+\begin{algorithmic}[1]
+    \Require Adjacency list $(i, j)$, costs $\{c_i\}$
+    \Ensure Minimum budget $B$
+    \State Run STRONGLY-CONNECTED-COMPONENTS using adjacency list
+    \Comment{$O(m+n)$}
+    \State $B \leftarrow 0$
+    \For {$C$ in component DAG} \Comment{$O(n)$}
+        \State $B \leftarrow B + \min(\{c_i\} \in C)$
+    \EndFor
+    \State \Return B
+\end{algorithmic}
+\end{algorithm}

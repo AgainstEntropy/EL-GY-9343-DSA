@@ -1,0 +1,35 @@
+\noindent \textred{4.} 
+Prove the lower bound of $\lceil \frac{3n}{2} \rceil - 2$ comparisons in the worst case to find both the maximum and minimum of $n$ numbers. (Hint: consider how many numbers are potentially either the maximum or minimum, and investigate how a comparison affects these counts.) 
+\begin{algorithm}[h]
+\caption{\textbf{FIND-MIN-MAX}$(A)$} \label{alg:min-max}
+\begin{algorithmic}[1]
+\Require $A$ as input array to find the maximum and minimum elements, indexed from 1 to $n$
+\Ensure Maximum element $m_{\max}$ and minimum element $m_{\min}$
+\If {$A[1] < A[2]$}  
+\Comment{Compare the first two elements and initialize $m_{\max}$ and $m_{\min}$}
+    \State $m_{\min} \leftarrow A[1]$, $m_{\max} \leftarrow A[2]$  
+    \Comment{with the larger and smaller ones respectively}
+\Else
+    \State $m_{\min} \leftarrow A[2]$, $m_{\max} \leftarrow A[1]$
+\EndIf
+\For {$i=1, \dots, \lceil \frac{n-2}{2} \rceil$}  
+\Comment{traverse the remaining array $A$ in pairs}
+    \If {$A[2i+1] > A[2i+2]$}  
+    \Comment{compare within the pair}
+        \State EXCHANGE $A[2i+1] \leftrightarrow A[2i+2]$
+    \EndIf
+    \If {$A[2i+1] < m_{\min}$}  
+    \Comment{compare the smaller one with the minimum so far}
+        \State $m_{\min} \leftarrow A[2i]$
+    \EndIf
+    \If {$A[2i+2] > m_{\max}$}  
+    \Comment{compare the larger one with the maximum so far}
+        \State $m_{\max} \leftarrow A[2i+1]$
+    \EndIf
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\noindent \textblue{
+From the Algo.\ref{alg:min-max} above, we can clearly see that in total we need at least $1 + \lceil \frac{n-2}{2} \rceil \times 3 = \lceil \frac{3n}{2} \rceil - 2$ times of comparison to find the maximum and minimum element in an array of size $n$.
+}

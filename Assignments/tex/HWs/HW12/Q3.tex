@@ -1,0 +1,13 @@
+\noindent \textred{3.} 
+Let $G(V, E)$ be a directed, weighted graph. The goal is to find the shortest path from a source node $s$ to every nodes in the graph.
+\begin{itemize}
+    \item[(a)] If all edges have unit weight, is there an algorithm faster than Dijkstra? Please just state the algorithm and its running time. \\
+    \myAnswer{
+    Directly using BFS is faster, with a running time of $O(|V|+|E|)$.
+    }
+    \item[(b)] Now suppose the weight function has the form $w(\cdot) : E \rightarrow \{1, 2\}$, i.e. every edge has weight either 1 or 2. Design $O(|V | + |E|)$-time algorithm for the problem. Please show why your algorithm works and how to get the running time bound. \\
+    \myAnswer{
+    We can manage to transform this problem into that in (a) by inserting some auxiliary vertices to all edges that have weight of 2. Now we can run BFS on the newly constructed graph, which yields a running time of $O(2|V|+2|E|) = O(|V|+|E|)$. \\
+    }
+\end{itemize}
+

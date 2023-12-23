@@ -1,0 +1,17 @@
+\noindent \textred{4.} 
+Let $G$ be an $n$-vertex connected undirected graph with costs on the edges, and the number of edges is $m = O(n^2)$. Assume that all the edge costs are distinct.
+
+\begin{itemize}
+    \item[(a)] Prove that $G$ has a unique MST; \\
+    \myAnswer{
+    Because all the edge costs are distinct, there is an unique sorting of all edges, according to which we can run Kruskal’s algorithm in the graph. Therefore, there will generate a uniquely determined MST.
+    }
+    \item[(b)] Give an algorithm to find a cycle in $G$ such that the maximum cost of edges in the cycle is minimum among all possible cycles. The time complexity of your algorithm should be $O(m \log n)$. Assume that the graph has at least one cycle, and finding MST takes $O(m \log n)$ time. 
+    \myAnswer{
+    \begin{enumerate}
+        \item First, find the MST. During the finding we also have been  tracking the edge of minimum cost.
+        \item Then, among all edges that are not in MST, find the edge of minimum cost, which becomes the edge asked to find.
+    \end{enumerate}
+    The second step takes at most $O(m)$ time, Thus the total time complexity is $O(m \log n) + O(m) \sim O(m \log n)$.
+    }
+\end{itemize}

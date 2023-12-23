@@ -1,0 +1,23 @@
+\noindent \textred{5.} 
+\textbf{Largest $i$ numebrs in sorted order.} Given a set of $n$ numbers, we wish to find the $i$ largest in sorted order using a comparison-based algorithm. Find the algorithm that implements each of the following methods with the best asymptotic worst-case running time, and analyze the running times of the algorithms in terms of $n$ and $i$.
+\begin{itemize}
+    \item[(a)] Sort the numbers, and list the $i$ largest. \\
+    \textblue{
+    It takes $O(n\log n)$ to sort $n$ numbers with a comparison-based algorithm, thus the total time complexity is \underline{$O(n\log n)$}.
+    }
+    \item[(b)] Build a max-priority queue from the numbers, and call EXTRACT-MAX $i$ times. \\
+    \textblue{
+    It takes $O(n)$ to build a max heap from $n$ numbers. And it takes $O(\log n)$ when calling EXTRACT-MAX on a heap of size $n$, which in total takes 
+    \begin{align*}
+        & O(\log n) + O(\log (n-1)) + \cdots + O(\log (n-i+1)) \\
+        = & \sum_{j=1}^{n} O(\log j) - \sum_{k=1}^{n-i} O(\log k) \\
+        = & O(\log n!) - O(\log (n-i)!) \\
+        \simeq & \underline{O(n\log n) - O(\log (n-i)!)}
+    \end{align*}
+    Note we use the Stirling's approximation at the last equal sign.
+    }
+    \item[(c)] Use an order-statistic algorithm to find the $i$th largest number, partition around that number, and sort the $i$ largest numbers. \\
+    \textblue{
+    It takes O(n) to find the largest $i$th number, and it takes another $O(n)$ to partition around that number. Finally, it takes $O(i \log i)$ to sort the larger part. In total, the time complexity is \underline{$O(n + i\log i)$}
+    }
+\end{itemize}

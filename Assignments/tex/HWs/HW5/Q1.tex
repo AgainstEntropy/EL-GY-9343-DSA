@@ -1,0 +1,11 @@
+\noindent \textred{1.} 
+We can improve the running time of quicksort in practice by taking advantage of the fast running time of insertion sort when its input is ``nearly” sorted. Upon calling quicksort on a subarray with fewer than $k$ elements, let it simply return without sorting the subarray. After the top-level call to quicksort returns, run insertion sort on the entire array to finish the sorting process. Argue that this sorting algorithm runs in $O(nk + n \log( \frac{n}{k}))$ expected time. How should we pick $k$, both in theory and in practice? 
+\textblue{
+\begin{enumerate}
+    \item Assume that in the $m$-th level, the whole array is partioned into subarrays with $k$ elements in each, i.e., $\frac{n}{2^m} = k$. In each level, the time complexity is $O(n)$, thus the total time complexity of recursive partition is $m \cdot O(n) = O(n \log(\frac{n}{k}))$. 
+    \item Moreover, because the $m$ levels of quick sort has split the original array into $\frac{n}{k}$ subarray, and $\forall i=0, 1, \dots, \frac{n}{k}-1$, all elements within the $i$-th subarray are smaller than those in the $(i+1)$-th subarray. Therefore, when running insertion sort on the returned entire array, it can be considered within each of the $\frac{n}{k}$ subarray, each contributing to the time complexity by $O(k^2)$. In total, the final insertion sort gives a time complexity of $\frac{n}{k} \dot O(k^2) = O(nk)$. 
+    \item To sum up, the total time complexity is $ O(nk) + O(n \log(\frac{n}{k})) = \underline{O(nk + n \log(\frac{n}{k}))}$.\\
+\end{enumerate}
+In theory, we expect to see that $O(nk + n \log(\frac{n}{k})) = O(n \log n + nk - n\log k)$ grows slower than $O(n\log n)$. If $k=n$, the worst-case time complexity degenerates to $O(n^2)$. So we can choose relatively small $k$ to avoid the degradation. \\ 
+In practice, we can choose some small $k$, such as 5 or 10, depending on the concrete situation.
+}

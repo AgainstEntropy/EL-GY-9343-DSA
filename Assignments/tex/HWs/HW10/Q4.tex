@@ -1,0 +1,18 @@
+\noindent \textred{4.} 
+Suppose you have an unrestricted supply of pennies, nickels, dimes, and quarters. You wish to give your friend $n$ cents using a minimum number of coins. You need to:
+\begin{itemize}
+    \item[(a)] Describe a greedy strategy to solve this problem, and analyze its time complexity; 
+    \myAnswer{
+    \begin{enumerate}
+        \item \label{s:1} Find out the coin with largest value $v$ that is less than currently remained cents $n_{rem}$.
+        \item \label{s:2} Add $m = n_{rem} / v$ coins with value $v$ to the solution set, and update $n_{rem} \leftarrow \mod(n_{rem}, v)$
+        \item Repeat steps \ref{s:1} - \ref{s:2} until $n_{rem} = 0$.
+    \end{enumerate}
+    Apparently, the time complexity is $O(n)$. 
+    }
+    \item[(b)] Prove the correctness of your algorithm.\\
+    \myAnswer{
+    Greedy-choice property: the algorithm tries to cover as many cents as possible with a minimal number of coins. \\
+    Optimal substructure property: after each iteration, the algorithm maintain the invariant that the current solution set is of value $n - n_{rem}$.
+    }
+\end{itemize}

@@ -1,0 +1,24 @@
+% refer to https://cs.nyu.edu/~khot/CSCI-GA.3520-001-2016/HW2sol.pdf, Problem 3
+\noindent \textred{3.} 
+You are given a set of $n$ intervals on a line: $(a_1, b_1], . . . , (a_n, b_n]$. Design a greedy algorithm to select minimum number of intervals whose union is the same as the union of all intervals. Please also analyze the time complexity, and prove the correctness by showing the two properties.
+
+\noindent \myAnswer{
+\textbf{Algorithm:}
+\begin{enumerate}
+    \item Sort all intervals in increasing order by $a_i$.
+    \item Set $s$ to be the minimal value of $a_i$ and initialize $T=0$ as the total number of intervals in the final solution set. 
+    \item \label{s:3} Try to find an interval $(a_i, b_i]$ such that $a_i \leq s < b_i$:
+    \begin{itemize}
+        \item If such an interval exists, set $T \leftarrow T + 1$ and $s \leftarrow b_i$;
+        \item If such an interval does not exist, set $s$ to the minimal $a_i$ that is greater than $s$.
+    \end{itemize}
+    \item Repeat step \ref{s:3}, until all intervals have been looked up.
+\end{enumerate}
+\textbf{Time complexity:} \\
+It takes $O(n \log n)$ to sort all intervals and $O(n)$ to traverse all intervals (since each interval will and only will be checked once), thus the total time complexity is $O(n \log n)$.\\
+\textbf{Correctness:}
+\begin{itemize}
+    \item Greedy-choice property: the algorithm tries to cover as much range as possible with a minimal number of intervals. 
+    \item Optimal substructure property: after each iteration, the algorithm maintain the invariant that the current solution set covers all possible points on the left side of $s$.
+\end{itemize}
+}

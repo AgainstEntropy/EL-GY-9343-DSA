@@ -1,0 +1,11 @@
+\noindent \textred{2.} 
+Suppose we use a hash function $h$ to hash $n$ distinct keys into an array $T$ of length $m$. Assuming simple uniform hashing, what is the expected number of collisions? 
+\textblue{
+\begin{itemize}
+    \item The expected number of collisions can be calculated as $n - \mathbb{E}[k]$, where $k$ is the number of slots that will be occupied.
+    \item To compute $\mathbb{E}[k]$, we need to know the probability that one slot will be occupied, which is $1 - p$, where $p$ is the probability that one slot will not be occupied eventually.
+    \item One slot being not occupied means that all $n$ keys go to the other $m-1$ slots, whose probability is $(\frac{m-1}{m})^n$.
+    \item Therefore, $\mathbb{E}[k] = m \cdot [1-(\frac{m-1}{m})^n]$ because all slot are independent.
+    \item Finally, The expected number of collisions is \underline{$n - m \cdot [1-(\frac{m-1}{m})^n]$}.
+\end{itemize}
+}

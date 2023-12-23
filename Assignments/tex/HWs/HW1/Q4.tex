@@ -1,0 +1,38 @@
+\noindent \textbf{4. We want to check if there is an element occurs more than $n/2$ times in an array containing $n$ elements, assuming only equality checks are allowed.}
+
+\noindent (a) Algo.\ref{alg:find} is part of the required algorithm. What is the time complexity now? \\
+\textblue{It is $O(n)$ now.}
+\newline
+
+\noindent (b) Make the algorithm complete by adding a few more lines to substitute the underlined text. Your modification should NOT change the time complexity. Be sure to return things as indicated.
+
+\begin{algorithm}
+\caption{Find majority element in an array} \label{alg:find}
+\begin{algorithmic}[1]
+\Require $L[1, ..., n]$ as input list containing $n$ real numbers
+\Ensure True or False. If true, also returning the majority element
+\State $c=0, v=L[1]$
+\For{$i=1,2,\dots,n$}
+    \If{$c == 0$}
+        \State $v=L[i]$
+    \EndIf
+    \If{$v == L[i]$}
+        \State $c=c+1$
+    \Else
+        \State $c=c-1$
+    \EndIf
+\EndFor
+\textblue{
+\State $c = 0$
+\For{$i=1,2,\dots,n$}
+    \If{$L[i] == v$}
+        \State $c = c + 1$
+    \EndIf
+    \If{$c == n//2 + 1$}
+        \State \Return True, $v$
+    \EndIf
+\EndFor
+\State \Return False
+}
+\end{algorithmic}
+\end{algorithm}

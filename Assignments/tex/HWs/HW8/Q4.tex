@@ -1,0 +1,59 @@
+\noindent \textred{4.}
+You’re helping a group of ethnographers analyze some oral history data they’ve collected by interviewing members of a village to learn about the lives of people who’ve lived there over the past two hundred years. From these interviews, they’ve learned about a set of $n$ people (all of them now deceased), whom we’ll denote $P_1, P_2, \dots, P_n$. They’ve also collected facts about when these people lived relative to one another. Each fact has one of the following two forms:
+\begin{itemize}
+    \item[(a)] For some $i$ and $j$, person $P_i$ died before person $P_j$ was born; or
+    \item[(b)] for some $i$ and $j$, the life spans of $P_i$ and $P_j$ overlapped at least partially. 
+\end{itemize}
+Naturally, they’re not sure that all these facts are correct; memories are not so good, and a lot of this was passed down by word of mouth. So what they’d like you to determine is whether the data they’ve collected is at least internally consistent, in the sense that there could have existed a set of people for which all the facts they’ve learned simultaneously hold. \\
+The original problem asks you to give an efficient algorithm to either produce proposed dates of birth and death for each of the $n$ people so that all the facts hold true, or report (correctly) that no such dates can exist — that is, the facts collected by the ethnographers are not internally consistent. Since topological sort will be taught next week, now let’s do make it simple. \textbf{You only need to give an efficient algorithm to determine whether the data is internally consistent.} \\
+Hints: Let’s say there are totally m recorded facts, and your algorithm should run in $O(m+n)$. It should be useful to turn the data into a graph. If each node represents an event (birth or death of someone), what is the total number of nodes? How to define the edges, directed or undirected? What makes the data inconsistent? What is the key structure to check in the graph? \\
+
+\noindent \myAnswer{
+For all $n$ people, we use two node per person to represent their birth and death event, so there are in total $2n$ nodes. And we defined an edge as a time sequence according to a fact:
+\begin{itemize}
+    \item If the fact is in form (a), we can create an edge that points from the death event of $P_i$ to the birth event of $P_j$.
+    \item If the fact is in form (b), we can create an edge that points from the birth event of $P_i$ to the death event of $P_j$, and another event that points from the birth event of $P_j$ to the death event of $P_i$.
+\end{itemize}
+After creating the whole directed graph, we have $|V| = 2n$ and $|E| = \Theta(m)$. The critical structure to detect is the cycle, because there shouldn't be any cycle in the time line. To detect the cycle, we can use a modified version of DFS as in Algo.\ref{alg:determine-birth-death}, which use a modified version of DFSVisit as in Algo.\ref{alg:DFSVisit}. \\
+The total time complexity of this version of DFS is still $O(|E| + |V|)$, which yields a running time of $O(m + n)$.
+}
+
+\newpage
+\begin{algorithm}[!h]
+\caption{Determining Inconsistency in Birth and Death Events} \label{alg:determine-birth-death}
+\begin{algorithmic}[1]
+\Require $n$ people and $m$ facts
+\Ensure whether or not all facts are consistent
+\State Build a directed graph $G$ from $n$ people and $m$ facts according to aforementioned description
+\For {$v$ in $G$}
+    \State $A[v] \leftarrow$ False; $T[v] \leftarrow$ False
+\EndFor
+\For {$v$ in $G$}
+    \If {DFSVisit($v, A, T$)}
+        \State \Return True
+    \EndIf
+\EndFor
+\State \Return False
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[!h]
+\caption{DFSVisit} \label{alg:DFSVisit}
+\begin{algorithmic}[1]
+\Require current vertex $v$, visitedArray $A$, tracedArray $T$
+\Ensure whether or not there is a cycle in the sub-graph
+\State $A[v] \leftarrow$ True
+\State $T[v] \leftarrow$ True
+\Comment{Mark $v$ as being traced when visiting the sub-graph of $v$}
+\For {$u$ in Adj($v$)}
+    \If {$A[u]$}
+        \State \Return $T[u]$
+        \Comment{There is a cycle if $u$ is visited and being traced at the same time}
+    \Else
+        \State \Return DFSVisit($u$)
+    \EndIf
+\EndFor
+\State $T[v] \leftarrow$ False
+\State \Return False
+\end{algorithmic}
+\end{algorithm}
